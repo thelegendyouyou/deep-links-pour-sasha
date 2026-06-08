@@ -1,5 +1,3 @@
-$ cat /home/user/youtube-deep-link/index.html
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,174 +6,41 @@ $ cat /home/user/youtube-deep-link/index.html
   <title>YouTube Deep Link Generator</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .card {
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 16px;
-      padding: 40px;
-      width: 100%;
-      max-width: 560px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-
+    body { font-family: 'Segoe UI', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 40px; width: 100%; max-width: 560px; }
+    .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
     .logo h1 { font-size: 20px; font-weight: 700; }
     .logo span { font-size: 13px; color: #888; display: block; font-weight: 400; }
-
     label { display: block; font-size: 13px; color: #aaa; margin-bottom: 8px; font-weight: 500; }
-
-    input {
-      width: 100%;
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 15px;
-      color: #fff;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
+    input { width: 100%; background: #111; border: 1px solid #333; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #fff; outline: none; transition: border-color 0.2s; }
     input:focus { border-color: #ff0000; }
     input::placeholder { color: #555; }
     .input-group { margin-bottom: 20px; }
-
-    .btn-main {
-      width: 100%;
-      background: #ff0000;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 14px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
+    .btn-main { width: 100%; background: #ff0000; color: #fff; border: none; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
     .btn-main:hover { background: #cc0000; }
-
     .result { margin-top: 28px; display: none; }
     .result-label { font-size: 13px; color: #aaa; margin-bottom: 8px; font-weight: 500; }
-
-    .result-box {
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 13px;
-      color: #4ea8ff;
-      word-break: break-all;
-      cursor: pointer;
-    }
-
-    .copy-btn {
-      width: auto;
-      background: #222;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 12px;
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
+    .result-box { background: #111; border: 1px solid #333; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #4ea8ff; word-break: break-all; cursor: pointer; }
+    .copy-btn { width: auto; background: #222; border: 1px solid #333; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 600; margin-top: 12px; color: #fff; cursor: pointer; transition: background 0.2s; }
     .copy-btn:hover { background: #2a2a2a; }
     .copy-btn.copied { background: #1a3a1a; border-color: #2d6a2d; color: #4caf50; }
-
-    .info {
-      margin-top: 24px;
-      background: #111;
-      border: 1px solid #2a2a2a;
-      border-radius: 10px;
-      padding: 14px 16px;
-      font-size: 13px;
-      color: #777;
-      line-height: 1.6;
-    }
-
+    .info { margin-top: 24px; background: #111; border: 1px solid #2a2a2a; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: #777; line-height: 1.6; }
     .info strong { color: #aaa; }
-
     .error { margin-top: 12px; color: #ff5555; font-size: 13px; display: none; }
-
     .tabs { display: flex; gap: 8px; margin-bottom: 24px; }
-
-    .tab {
-      flex: 1;
-      background: #111;
-      border: 1px solid #2a2a2a;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #777;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-    }
-
+    .tab { flex: 1; background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 600; color: #777; cursor: pointer; text-align: center; transition: all 0.2s; }
     .tab.active { background: #ff0000; border-color: #ff0000; color: #fff; }
-
-    /* Redirect page styles */
-    .redirect-page {
-      text-align: center;
-    }
-
+    .redirect-page { text-align: center; }
     .redirect-page h2 { font-size: 22px; margin-bottom: 12px; }
     .redirect-page p { color: #888; font-size: 15px; margin-bottom: 24px; line-height: 1.6; }
-
-    .btn-open {
-      display: inline-block;
-      background: #ff0000;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 14px 32px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
+    .btn-open { display: inline-block; background: #ff0000; color: #fff; border: none; border-radius: 10px; padding: 14px 32px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.2s; }
     .btn-open:hover { background: #cc0000; }
-
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid #333;
-      border-top-color: #ff0000;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 24px;
-    }
-
+    .spinner { width: 40px; height: 40px; border: 3px solid #333; border-top-color: #ff0000; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 24px; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 <div class="card" id="app"></div>
-
 <script>
   const params = new URLSearchParams(location.search);
   const vParam = params.get('v');
@@ -189,42 +54,39 @@ $ cat /home/user/youtube-deep-link/index.html
   }
 
   function showRedirectPage() {
-    let appUrl, webUrl;
-
+    let youtubeUrl, webUrl;
     if (vParam) {
-      appUrl = 'youtube://watch?v=' + vParam;
-      webUrl = 'https://www.youtube.com/watch?v=' + vParam;
+      youtubeUrl = 'https://youtu.be/' + vParam;
+      webUrl     = 'https://www.youtube.com/watch?v=' + vParam;
     } else if (cidParam) {
-      appUrl = 'youtube://www.youtube.com/channel/' + cidParam;
-      webUrl = 'https://www.youtube.com/channel/' + cidParam;
+      youtubeUrl = 'https://www.youtube.com/channel/' + cidParam;
+      webUrl     = youtubeUrl;
     } else {
       const handle = cParam.startsWith('@') ? cParam : '@' + cParam;
-      appUrl = 'youtube://www.youtube.com/' + handle;
-      webUrl = 'https://www.youtube.com/' + handle;
+      youtubeUrl = 'https://www.youtube.com/' + handle;
+      webUrl     = youtubeUrl;
     }
+
+    const isAndroid = /android/i.test(navigator.userAgent);
+    const deepLink = isAndroid
+      ? youtubeUrl.replace('https://', 'intent://')
+        + '#Intent;package=com.google.android.youtube;scheme=https;S.browser_fallback_url='
+        + encodeURIComponent(webUrl) + ';end'
+      : youtubeUrl.replace('https://', 'x-safari-https://');
 
     document.getElementById('app').innerHTML = `
       <div class="redirect-page">
         <div class="spinner"></div>
         <h2>Ouverture de YouTube...</h2>
-        <p>Si YouTube ne s'ouvre pas automatiquement,<br>appuie sur le bouton ci-dessous.</p>
-        <a class="btn-open" href="${webUrl}" id="open-btn">Ouvrir dans YouTube</a>
+        <p>Si YouTube ne s'ouvre pas,<br>appuie sur le bouton ci-dessous.</p>
+        <a class="btn-open" href="${webUrl}">Ouvrir dans YouTube</a>
       </div>
     `;
-
-    // Tente d'ouvrir l'app, fallback sur le web
-    setTimeout(() => {
-      window.location.href = appUrl;
-    }, 300);
-
-    setTimeout(() => {
-      document.getElementById('open-btn').href = webUrl;
-    }, 1500);
+    window.location.href = deepLink;
   }
 
   function showGeneratorPage() {
     const base = location.origin + location.pathname;
-
     document.getElementById('app').innerHTML = `
       <div class="logo">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -236,41 +98,34 @@ $ cat /home/user/youtube-deep-link/index.html
           <span>Fais quitter Instagram à tes abonnés</span>
         </div>
       </div>
-
       <div class="tabs">
         <div class="tab active" onclick="setMode('video')">Vidéo / Chaîne</div>
         <div class="tab" onclick="setMode('channel')">Handle / Nom</div>
       </div>
-
       <div id="mode-video">
         <div class="input-group">
           <label>URL YouTube (vidéo ou chaîne)</label>
           <input id="url-input" type="text" placeholder="https://www.youtube.com/watch?v=..." />
         </div>
       </div>
-
       <div id="mode-channel" style="display:none">
         <div class="input-group">
           <label>Handle ou nom de chaîne</label>
           <input id="channel-input" type="text" placeholder="@nomdelachaine" />
         </div>
       </div>
-
       <div class="error" id="error-msg"></div>
       <button class="btn-main" onclick="generate()">Générer le Deep Link</button>
-
       <div class="result" id="result">
         <div class="result-label">Ton lien à coller dans Instagram :</div>
         <div class="result-box" id="result-link" onclick="copyLink()"></div>
         <button class="copy-btn" id="copy-btn" onclick="copyLink()">Copier le lien</button>
       </div>
-
       <div class="info">
         <strong>Comment ça marche ?</strong><br>
-        Colle ce lien dans ta bio Instagram. Quand quelqu'un clique, une page s'ouvre et redirige automatiquement vers l'app YouTube — il quitte Instagram.
+        Colle ce lien dans ta bio Instagram. Quand quelqu'un clique, la page redirige automatiquement vers l'app YouTube.
       </div>
     `;
-
     document.getElementById('url-input').addEventListener('keydown', e => { if (e.key === 'Enter') generate(); });
     document.getElementById('channel-input').addEventListener('keydown', e => { if (e.key === 'Enter') generate(); });
 
@@ -284,26 +139,21 @@ $ cat /home/user/youtube-deep-link/index.html
       document.getElementById('error-msg').style.display = 'none';
       window._currentMode = mode;
     };
-
     window._currentMode = 'video';
 
     window.generate = function() {
       document.getElementById('error-msg').style.display = 'none';
-
       if (window._currentMode === 'video') {
         const url = document.getElementById('url-input').value.trim();
         if (!url) return showError('Entre une URL YouTube.');
-
         const videoId = extractVideoId(url);
         if (videoId) { showResult(base + '?v=' + videoId); return; }
-
         const channel = extractChannel(url);
         if (channel) {
           if (channel.type === 'channel_id') showResult(base + '?cid=' + channel.value);
           else showResult(base + '?c=' + encodeURIComponent(channel.value));
           return;
         }
-
         showError('URL non reconnue. Utilise un lien YouTube valide.');
       } else {
         let handle = document.getElementById('channel-input').value.trim();
@@ -325,12 +175,7 @@ $ cat /home/user/youtube-deep-link/index.html
   }
 
   function extractVideoId(url) {
-    const patterns = [
-      /[?&]v=([a-zA-Z0-9_-]{11})/,
-      /youtu\.be\/([a-zA-Z0-9_-]{11})/,
-      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
-      /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/
-    ];
+    const patterns = [/[?&]v=([a-zA-Z0-9_-]{11})/, /youtu\.be\/([a-zA-Z0-9_-]{11})/, /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/, /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/];
     for (const p of patterns) { const m = url.match(p); if (m) return m[1]; }
     return null;
   }
