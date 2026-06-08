@@ -68,11 +68,22 @@
     }
 
     const isAndroid = /android/i.test(navigator.userAgent);
-    const deepLink = isAndroid
-      ? youtubeUrl.replace('https://', 'intent://')
+
+    let deepLink;
+    if (isAndroid) {
+      deepLink = youtubeUrl.replace('https://', 'intent://')
         + '#Intent;package=com.google.android.youtube;scheme=https;S.browser_fallback_url='
-        + encodeURIComponent(webUrl) + ';end'
-      : youtubeUrl.replace('https://', 'x-safari-https://');
+        + encodeURIComponent(webUrl) + ';end';
+    } else {
+      if (vParam) {
+        deepLink = 'youtube://watch?v=' + vParam;
+      } else if (cidParam) {
+        deepLink = 'youtube://www.youtube.com/channel/' + cidParam;
+      } else {
+        const handle = cParam.startsWith('@') ? cParam : '@' + cParam;
+        deepLink = 'youtube://www.youtube.com/' + handle;
+      }
+    }
 
     document.getElementById('app').innerHTML = `
       <div class="redirect-page">
