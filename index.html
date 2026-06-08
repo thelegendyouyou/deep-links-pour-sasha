@@ -1,3 +1,5 @@
+$ cat /home/user/youtube-deep-link/index.html
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,86 +8,273 @@
   <title>YouTube Deep Link Generator</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
-    .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 16px; padding: 40px; width: 100%; max-width: 560px; }
-    .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
-    .logo svg { flex-shrink: 0; }
-    .logo h1 { font-size: 20px; font-weight: 700; color: #fff; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .logo h1 { font-size: 20px; font-weight: 700; }
     .logo span { font-size: 13px; color: #888; display: block; font-weight: 400; }
+
     label { display: block; font-size: 13px; color: #aaa; margin-bottom: 8px; font-weight: 500; }
-    input { width: 100%; background: #111; border: 1px solid #333; border-radius: 10px; padding: 12px 16px; font-size: 15px; color: #fff; outline: none; transition: border-color 0.2s; }
+
+    input {
+      width: 100%;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 15px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
     input:focus { border-color: #ff0000; }
     input::placeholder { color: #555; }
     .input-group { margin-bottom: 20px; }
-    button { width: 100%; background: #ff0000; color: #fff; border: none; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 4px; }
-    button:hover { background: #cc0000; }
+
+    .btn-main {
+      width: 100%;
+      background: #ff0000;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-main:hover { background: #cc0000; }
+
     .result { margin-top: 28px; display: none; }
     .result-label { font-size: 13px; color: #aaa; margin-bottom: 8px; font-weight: 500; }
-    .result-box { background: #111; border: 1px solid #333; border-radius: 10px; padding: 12px 16px; font-size: 14px; color: #4ea8ff; word-break: break-all; cursor: pointer; transition: border-color 0.2s; }
-    .result-box:hover { border-color: #555; }
-    .copy-btn { width: auto; background: #222; border: 1px solid #333; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 600; margin-top: 12px; color: #fff; transition: background 0.2s; }
+
+    .result-box {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #4ea8ff;
+      word-break: break-all;
+      cursor: pointer;
+    }
+
+    .copy-btn {
+      width: auto;
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 12px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
     .copy-btn:hover { background: #2a2a2a; }
     .copy-btn.copied { background: #1a3a1a; border-color: #2d6a2d; color: #4caf50; }
-    .info { margin-top: 24px; background: #111; border: 1px solid #2a2a2a; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: #777; line-height: 1.6; }
+
+    .info {
+      margin-top: 24px;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #777;
+      line-height: 1.6;
+    }
+
     .info strong { color: #aaa; }
+
     .error { margin-top: 12px; color: #ff5555; font-size: 13px; display: none; }
+
     .tabs { display: flex; gap: 8px; margin-bottom: 24px; }
-    .tab { flex: 1; background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 600; color: #777; cursor: pointer; text-align: center; transition: all 0.2s; }
+
+    .tab {
+      flex: 1;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #777;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
     .tab.active { background: #ff0000; border-color: #ff0000; color: #fff; }
+
+    /* Redirect page styles */
+    .redirect-page {
+      text-align: center;
+    }
+
+    .redirect-page h2 { font-size: 22px; margin-bottom: 12px; }
+    .redirect-page p { color: #888; font-size: 15px; margin-bottom: 24px; line-height: 1.6; }
+
+    .btn-open {
+      display: inline-block;
+      background: #ff0000;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-open:hover { background: #cc0000; }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #333;
+      border-top-color: #ff0000;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 24px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="logo">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-        <rect width="36" height="36" rx="10" fill="#ff0000"/>
-        <path d="M26.5 17.134a1 1 0 0 1 0 1.732L14.5 25.928A1 1 0 0 1 13 25.062V10.938A1 1 0 0 1 14.5 10.07l12 6.928z" fill="white"/>
-      </svg>
-      <div>
-        <h1>YouTube Deep Link</h1>
-        <span>Fais quitter Instagram à tes abonnés</span>
+<div class="card" id="app"></div>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const vParam = params.get('v');
+  const cParam = params.get('c');
+  const cidParam = params.get('cid');
+
+  if (vParam || cParam || cidParam) {
+    showRedirectPage();
+  } else {
+    showGeneratorPage();
+  }
+
+  function showRedirectPage() {
+    let appUrl, webUrl;
+
+    if (vParam) {
+      appUrl = 'youtube://watch?v=' + vParam;
+      webUrl = 'https://www.youtube.com/watch?v=' + vParam;
+    } else if (cidParam) {
+      appUrl = 'youtube://www.youtube.com/channel/' + cidParam;
+      webUrl = 'https://www.youtube.com/channel/' + cidParam;
+    } else {
+      const handle = cParam.startsWith('@') ? cParam : '@' + cParam;
+      appUrl = 'youtube://www.youtube.com/' + handle;
+      webUrl = 'https://www.youtube.com/' + handle;
+    }
+
+    document.getElementById('app').innerHTML = `
+      <div class="redirect-page">
+        <div class="spinner"></div>
+        <h2>Ouverture de YouTube...</h2>
+        <p>Si YouTube ne s'ouvre pas automatiquement,<br>appuie sur le bouton ci-dessous.</p>
+        <a class="btn-open" href="${webUrl}" id="open-btn">Ouvrir dans YouTube</a>
       </div>
-    </div>
+    `;
 
-    <div class="tabs">
-      <div class="tab active" onclick="setMode('video')">Vidéo / Chaîne</div>
-      <div class="tab" onclick="setMode('channel')">Nom de chaîne</div>
-    </div>
+    // Tente d'ouvrir l'app, fallback sur le web
+    setTimeout(() => {
+      window.location.href = appUrl;
+    }, 300);
 
-    <div id="mode-video">
-      <div class="input-group">
-        <label>URL YouTube (vidéo ou chaîne)</label>
-        <input id="url-input" type="text" placeholder="https://www.youtube.com/watch?v=..." />
+    setTimeout(() => {
+      document.getElementById('open-btn').href = webUrl;
+    }, 1500);
+  }
+
+  function showGeneratorPage() {
+    const base = location.origin + location.pathname;
+
+    document.getElementById('app').innerHTML = `
+      <div class="logo">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="10" fill="#ff0000"/>
+          <path d="M26.5 17.134a1 1 0 0 1 0 1.732L14.5 25.928A1 1 0 0 1 13 25.062V10.938A1 1 0 0 1 14.5 10.07l12 6.928z" fill="white"/>
+        </svg>
+        <div>
+          <h1>YouTube Deep Link</h1>
+          <span>Fais quitter Instagram à tes abonnés</span>
+        </div>
       </div>
-    </div>
 
-    <div id="mode-channel" style="display:none">
-      <div class="input-group">
-        <label>Nom d'utilisateur ou handle YouTube</label>
-        <input id="channel-input" type="text" placeholder="@nomdelachaine" />
+      <div class="tabs">
+        <div class="tab active" onclick="setMode('video')">Vidéo / Chaîne</div>
+        <div class="tab" onclick="setMode('channel')">Handle / Nom</div>
       </div>
-    </div>
 
-    <div class="error" id="error-msg"></div>
-    <button onclick="generate()">Générer le Deep Link</button>
+      <div id="mode-video">
+        <div class="input-group">
+          <label>URL YouTube (vidéo ou chaîne)</label>
+          <input id="url-input" type="text" placeholder="https://www.youtube.com/watch?v=..." />
+        </div>
+      </div>
 
-    <div class="result" id="result">
-      <div class="result-label">Ton deep link Instagram :</div>
-      <div class="result-box" id="result-link" onclick="copyLink()"></div>
-      <button class="copy-btn" id="copy-btn" onclick="copyLink()">Copier le lien</button>
-    </div>
+      <div id="mode-channel" style="display:none">
+        <div class="input-group">
+          <label>Handle ou nom de chaîne</label>
+          <input id="channel-input" type="text" placeholder="@nomdelachaine" />
+        </div>
+      </div>
 
-    <div class="info">
-      <strong>Comment ça marche ?</strong><br>
-      Colle ce lien dans ta bio ou en story Instagram. Quand quelqu'un clique dessus, l'app YouTube s'ouvre directement — il quitte Instagram.
-    </div>
-  </div>
+      <div class="error" id="error-msg"></div>
+      <button class="btn-main" onclick="generate()">Générer le Deep Link</button>
 
-  <script>
-    let currentMode = 'video';
+      <div class="result" id="result">
+        <div class="result-label">Ton lien à coller dans Instagram :</div>
+        <div class="result-box" id="result-link" onclick="copyLink()"></div>
+        <button class="copy-btn" id="copy-btn" onclick="copyLink()">Copier le lien</button>
+      </div>
 
-    function setMode(mode) {
-      currentMode = mode;
+      <div class="info">
+        <strong>Comment ça marche ?</strong><br>
+        Colle ce lien dans ta bio Instagram. Quand quelqu'un clique, une page s'ouvre et redirige automatiquement vers l'app YouTube — il quitte Instagram.
+      </div>
+    `;
+
+    document.getElementById('url-input').addEventListener('keydown', e => { if (e.key === 'Enter') generate(); });
+    document.getElementById('channel-input').addEventListener('keydown', e => { if (e.key === 'Enter') generate(); });
+
+    window.setMode = function(mode) {
       document.querySelectorAll('.tab').forEach((t, i) => {
         t.classList.toggle('active', (i === 0 && mode === 'video') || (i === 1 && mode === 'channel'));
       });
@@ -93,69 +282,80 @@
       document.getElementById('mode-channel').style.display = mode === 'channel' ? '' : 'none';
       document.getElementById('result').style.display = 'none';
       document.getElementById('error-msg').style.display = 'none';
-    }
+      window._currentMode = mode;
+    };
 
-    function extractVideoId(url) {
-      const patterns = [/[?&]v=([a-zA-Z0-9_-]{11})/, /youtu\.be\/([a-zA-Z0-9_-]{11})/, /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/, /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/];
-      for (const p of patterns) { const m = url.match(p); if (m) return { type: 'video', id: m[1] }; }
-      return null;
-    }
+    window._currentMode = 'video';
 
-    function extractChannel(url) {
-      const patterns = [/youtube\.com\/@([\w.-]+)/, /youtube\.com\/c\/([\w.-]+)/, /youtube\.com\/channel\/(UC[\w-]+)/, /youtube\.com\/user\/([\w.-]+)/];
-      for (const p of patterns) { const m = url.match(p); if (m) return { type: p.source.includes('UC') ? 'channel_id' : 'channel', value: m[1] }; }
-      return null;
-    }
-
-    function buildDeepLink(parsed) {
-      if (parsed.type === 'video') return `vnd.youtube://${parsed.id}`;
-      if (parsed.type === 'channel_id') return `vnd.youtube://www.youtube.com/channel/${parsed.value}`;
-      const handle = parsed.value.startsWith('@') ? parsed.value : '@' + parsed.value;
-      return `vnd.youtube://www.youtube.com/${handle}`;
-    }
-
-    function showError(msg) {
-      const el = document.getElementById('error-msg');
-      el.textContent = msg; el.style.display = 'block';
-      document.getElementById('result').style.display = 'none';
-    }
-
-    function generate() {
+    window.generate = function() {
       document.getElementById('error-msg').style.display = 'none';
-      if (currentMode === 'video') {
+
+      if (window._currentMode === 'video') {
         const url = document.getElementById('url-input').value.trim();
         if (!url) return showError('Entre une URL YouTube.');
-        const video = extractVideoId(url);
-        if (video) { showResult(buildDeepLink(video)); return; }
+
+        const videoId = extractVideoId(url);
+        if (videoId) { showResult(base + '?v=' + videoId); return; }
+
         const channel = extractChannel(url);
-        if (channel) { showResult(buildDeepLink(channel)); return; }
+        if (channel) {
+          if (channel.type === 'channel_id') showResult(base + '?cid=' + channel.value);
+          else showResult(base + '?c=' + encodeURIComponent(channel.value));
+          return;
+        }
+
         showError('URL non reconnue. Utilise un lien YouTube valide.');
       } else {
         let handle = document.getElementById('channel-input').value.trim();
-        if (!handle) return showError('Entre un nom de chaîne ou handle.');
-        if (!handle.startsWith('@')) handle = '@' + handle;
-        showResult(`vnd.youtube://www.youtube.com/${handle}`);
+        if (!handle) return showError('Entre un handle ou nom de chaîne.');
+        if (handle.startsWith('@')) handle = handle.slice(1);
+        showResult(base + '?c=' + encodeURIComponent(handle));
       }
-    }
+    };
 
-    function showResult(link) {
-      document.getElementById('result-link').textContent = link;
-      document.getElementById('result').style.display = 'block';
-      const btn = document.getElementById('copy-btn');
-      btn.textContent = 'Copier le lien'; btn.className = 'copy-btn';
-    }
-
-    function copyLink() {
+    window.copyLink = function() {
       const link = document.getElementById('result-link').textContent;
       navigator.clipboard.writeText(link).then(() => {
         const btn = document.getElementById('copy-btn');
-        btn.textContent = 'Copié !'; btn.className = 'copy-btn copied';
+        btn.textContent = 'Copié !';
+        btn.className = 'copy-btn copied';
         setTimeout(() => { btn.textContent = 'Copier le lien'; btn.className = 'copy-btn'; }, 2000);
       });
-    }
+    };
+  }
 
-    document.getElementById('url-input').addEventListener('keydown', e => { if (e.key === 'Enter') generate(); });
-    document.getElementById('channel-input').addEventListener('keydown', e => { if (e.key === 'Enter') generate(); });
-  </script>
+  function extractVideoId(url) {
+    const patterns = [
+      /[?&]v=([a-zA-Z0-9_-]{11})/,
+      /youtu\.be\/([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+      /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/
+    ];
+    for (const p of patterns) { const m = url.match(p); if (m) return m[1]; }
+    return null;
+  }
+
+  function extractChannel(url) {
+    const patterns = [
+      { r: /youtube\.com\/@([\w.-]+)/, type: 'channel' },
+      { r: /youtube\.com\/c\/([\w.-]+)/, type: 'channel' },
+      { r: /youtube\.com\/channel\/(UC[\w-]+)/, type: 'channel_id' },
+      { r: /youtube\.com\/user\/([\w.-]+)/, type: 'channel' }
+    ];
+    for (const { r, type } of patterns) { const m = url.match(r); if (m) return { type, value: m[1] }; }
+    return null;
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('error-msg');
+    el.textContent = msg; el.style.display = 'block';
+    document.getElementById('result').style.display = 'none';
+  }
+
+  function showResult(link) {
+    document.getElementById('result-link').textContent = link;
+    document.getElementById('result').style.display = 'block';
+  }
+</script>
 </body>
 </html>
